@@ -1,0 +1,37 @@
+<div class="modal fade" id="tradeModal" tabindex="-1" aria-labelledby="tradeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tradeModalLabel">Trade Stock</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="tradeForm">
+                    <div class="mb-3">
+                        <label class="form-label">Stock</label>
+                        <p id="selectedStock" class="form-control-static"></p>
+                        <input type="hidden" id="stockSymbol">
+                    </div>
+                    <div class="mb-3">
+                        <label for="currentPrice" class="form-label">Current Price</label>
+                        <p id="currentPrice" class="form-control-static"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="totalCost" class="form-label">Total Cost</label>
+                        <p id="totalCost" class="form-control-static">-</p>
+                    </div>
+                    <div class="alert alert-danger d-none" id="tradeError"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="trade('buy')">Buy</button>
+                <button type="button" class="btn btn-danger" onclick="trade('sell')">Sell</button>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% if google.authorized %}
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h2>Welcome, {{ email }}!</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Your Portfolio</h5>
+                        <p class="card-text">Balance: ₹{{ "%.2f"|format(portfolio.balance) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Stock Market</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" id="stockTable">
+                                <thead>
+                                    <tr>
+                                        <th>Symbol</th>
+                                        <th>Name</th>
+                                        <th>Price (₹)</th>
+                                        <th>Change %</th>
+                                        <th>Trade Signal</th>
+                                        <th>Stop Loss (₹)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for symbol, name in stocks.items() %}
+                                    <tr id="{{ symbol }}">
+                                        <td>{{ symbol }}</td>
+                                        <td>{{ name }}</td>
+                                        <td class="price">-</td>
+                                        <td class="change">-</td>
+                                        <td class="trade-signal">-</td>
+                                        <td class="stop-loss">-</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary trade-btn" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#tradeModal"
+                                                    data-symbol="{{ symbol }}"
+                                                    data-name="{{ name }}">
+                                                Trade
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Your Holdings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="holdings">
+                            {% for holding in portfolio.holdings %}
+                            <div class="holding-item mb-2">
+                                <strong>{{ holding.symbol }}</strong>
+                                <br>
+                                Quantity: {{ holding.quantity }}
+                                <br>
+                                Avg Price: {{ "%.2f"|format(holding.avg_price) }}
+                            </div>
+                            {% else %}
+                            <p>No holdings yet. Start trading!</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trade Modal -->
+        {% include 'trade_modal.html' %}
+
+    {% else %}
+        <div class="text-center py-5">
+            <h1 class="display-4 mb-4">Welcome to Paper Trading</h1>
+            <p class="lead mb-4">Practice trading stocks with virtual money. Sign in to get started!</p>
+            <a href="{{ url_for('google.login') }}" class="btn btn-primary btn-lg">
+                <img src="https://www.google.com/favicon.ico" alt="Google" style="height: 20px; margin-right: 10px;">
+                Sign in with Google
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    const userEmail = {% if google.authorized %}'{{ email }}'{% else %}null{% endif %};
+</script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

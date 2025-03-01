@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+
+# Virtual environment
+venv/
+env/
+
+# Flask-specific
+instance/
+.flask_session/
+
+# WebSockets-related (if using socket logs)
+websocket_logs/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Logs and database files
+*.log
+*.sqlite3
+db.sqlite3
+*.db
+
+# IDE/editor files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.so
+*.o
+*.out
+*.a
+
+# Pipenv & Poetry
+Pipfile
+Pipfile.lock
+poetry.lock
