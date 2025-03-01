@@ -1,8 +1,8 @@
 def get_default_portfolio():
     return {
         'balance': 100000,
-        'holdings': {},  # {stock_symbol: {'quantity': qty, 'avg_price': price}}
-        'transactions': []  # list of trade history
+        'holdings': {}, 
+        'transactions': []  
     } 
 
 import pandas as pd
@@ -12,7 +12,7 @@ def calculate_macd(data):
     long_window = 26
     signal_window = 9
     
-    # Use numpy for faster calculations
+    
     close_prices = data['Close'].values
     exp1 = pd.Series(close_prices).ewm(span=short_window, adjust=False).mean()
     exp2 = pd.Series(close_prices).ewm(span=long_window, adjust=False).mean()

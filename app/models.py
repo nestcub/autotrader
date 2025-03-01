@@ -29,7 +29,7 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'), nullable=False)
     symbol = db.Column(db.String(20), nullable=False)
-    action = db.Column(db.String(10), nullable=False)  # 'buy' or 'sell'
+    action = db.Column(db.String(10), nullable=False)  
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
